@@ -10,6 +10,14 @@ HDE::SimpleSocket::SimpleSocket(int domain, int service, int protocol, int port,
     // Establish socket
     sock = socket(domain, service, protocol);
     test_connection(sock);
+
+    // Allow quick rebinding after restart
+    int opt = 1;
+    test_connection(setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)));
+#ifdef SO_REUSEPORT
+    // Optional: allow multiple binds to same port (not critical)
+    setsockopt(sock, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
+#endif
 }
 // Test connection
 void HDE::SimpleSocket::test_connection(int item_to_test)

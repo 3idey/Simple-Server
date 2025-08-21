@@ -8,8 +8,8 @@ HDE::BindingSocket::BindingSocket(int domain, int service, int protocol, int por
 }
 void HDE::BindingSocket::connect_to_network(int sock, struct sockaddr_in address)
 {
-    bind(sock, (struct sockaddr *)&address,
-         sizeof(address));
+    binding = bind(sock, (struct sockaddr *)&address,
+                   sizeof(address));
 }
 
 int HDE::BindingSocket::get_binding()

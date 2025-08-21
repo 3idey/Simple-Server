@@ -1,6 +1,6 @@
 #include "TestServer.hpp"
 
-HDE::TestServer::TestServer() : SimpleServer(AF_INET, SOCK_STREAM, 0, 80, INADDR_ANY, 10)
+HDE::TestServer::TestServer() : SimpleServer(AF_INET, SOCK_STREAM, 0, 8080, INADDR_ANY, 10)
 {
     launch();
 }
@@ -23,8 +23,15 @@ void HDE::TestServer::handler()
 
 void HDE::TestServer::responder()
 {
-    char *hello = (char *)"Hello from server";
-    write(new_socket, hello, strlen(hello));
+    const char *body = "Hello from server";
+    std::string resp = "HTTP/1.1 200 OK\r\n"
+                       "Content-Type: text/plain\r\n"
+                       "Content-Length: " +
+                       std::to_string(strlen(body)) + "\r\n"
+                                                      "Connection: close\r\n"
+                                                      "\r\n" +
+                       std::string(body);
+    write(new_socket, resp.c_str(), resp.size());
     close(new_socket);
 }
 void HDE::TestServer::launch()
