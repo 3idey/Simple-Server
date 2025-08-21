@@ -10,5 +10,15 @@ HDE::ListeningSocket::
 }
 void HDE::ListeningSocket::start_listening()
 {
-    listening = listen(get_connection(), backlog);
+    listening = listen(get_sock(), backlog);
+}
+
+int HDE::ListeningSocket::get_listening()
+{
+    return listening;
+}
+
+int HDE::ListeningSocket::get_backlog()
+{
+    return backlog;
 }

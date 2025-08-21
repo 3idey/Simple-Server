@@ -30,12 +30,3 @@ int HDE::SimpleSocket::get_sock()
 {
     return sock;
 }
-int HDE::SimpleSocket::get_connection()
-{
-    return connection;
-}
-// setters
-void HDE::SimpleSocket::set_connection(int con)
-{
-    connection = con;
-}
